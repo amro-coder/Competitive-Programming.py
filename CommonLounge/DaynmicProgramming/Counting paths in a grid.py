@@ -1,3 +1,11 @@
+#Problem Statement
+# Counting paths in a grid:
+# You have a rectangular grid of points with n rows and n columns. You start at the top left corner.
+# At each step, you can either go down to the next point in the same column or right to the next point in the same row.
+# How many such paths are there from the top left corner to the bottom right corner?
+# What if some points are deleted (that is, no path can go through these points)?
+
+# Solution:
 from collections import defaultdict
 n,m=map(int,input().split())
 k=int(input())

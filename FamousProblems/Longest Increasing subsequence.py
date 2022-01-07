@@ -40,21 +40,12 @@ print(solution)
 # just keep track of each best possible sequence last element
 # then do binary search to know which last element to change
 # here is the code
-def modifiedBinSearch(target):
-    low=0
-    high=len(tailOfSequence)-1
-    while(low<=high):
-        mid=(low+high)//2
-        if(target>tailOfSequence[mid]):
-            low=mid+1
-        else:
-            high=mid-1
-    return high
+from bisect import bisect_left
 biggest=max(x)+1
 tailOfSequence=[biggest for _ in range(n)]
 ans=0
 for i in range(n):
-    index=modifiedBinSearch(x[i])+1
+    index=bisect_left(tailOfSequence,x[i],0,len(tailOfSequence)-1)
     tailOfSequence[index]=x[i]
     ans=max(ans,index)
 print("smart solution:")

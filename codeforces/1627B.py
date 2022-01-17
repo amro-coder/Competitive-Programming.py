@@ -41,3 +41,4 @@ for _ in range(int(input())):
                     ans.append(start + i + j)
     ans.sort()
     print(*ans)
+

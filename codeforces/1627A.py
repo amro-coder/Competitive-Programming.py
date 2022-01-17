@@ -31,3 +31,5 @@ for _ in range(int(input())):
             print(2)
         else:
             print(-1)
+################################
+

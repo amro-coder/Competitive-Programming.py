@@ -15,19 +15,32 @@
 #
 # Output format
 # The output should be a single line containing a single integer, the minimum possible cost for you, the chef.
-
-
+#
+#
 # Solution:
 import sys
 input=sys.stdin.readline
 n=int(input())
-x=tuple(map(int,input().split()))
+x=list(map(int,input().split()))
 if(n<=2):
     print(min(x))
     exit()
-dp=[0]*n
-dp[-1]=min(x[-2],x[-1])
-dp[-2]=min(x[-2],x[-3]+x[-1])
+# including first element
+dp1=[0]*n
+dp1[-1]=x[-1]
+dp1[-2]=x[-2]
 for i in range(n-3,-1,-1):
-    dp[i]=min(x[i]+dp[i+2],x[i-1]+dp[i+1])
-print(dp[0])
+    dp1[i]=x[i]+min(dp1[i+2],dp1[i+1])
+
+x.reverse()
+# including last element
+dp2=[0]*n
+dp2[-1]=x[-1]
+dp2[-2]=x[-2]
+for i in range(n-3,-1,-1):
+    dp2[i]=x[i]+min(dp2[i+2],dp2[i+1])
+print(min(dp1[0],dp2[0]))
+
+
+
+

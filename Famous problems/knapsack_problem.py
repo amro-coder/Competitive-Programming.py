@@ -1,28 +1,29 @@
 n,w=map(int,input().split())
-weights=[0]
-values=[0]
+weight=[]
+value=[]
 for _ in range(n):
-    weight,value=map(int,input().split())
-    values.append(value)
-    weights.append(weight)
-dp=[[0 for _ in range(w+1)] for __ in range(n+1)]
-for i in range(1,n+1):
-    for j in range(1,w+1):
-        if(weights[i]>j):
-            dp[i][j]=dp[i-1][j]
-        else:
-            dp[i][j]=max(dp[i-1][j],dp[i-1][j-weights[i]]+values[i])
-print(dp[n][w])
+    w1,v1=map(int,input().split())
+    value.append(v1)
+    weight.append(w1)
+dp=[0 for _ in range(w+1)]
+for i in range(n):
+    for j in range(w,weight[i]-1,-1):
+        dp[j]=max(dp[j],dp[j-weight[i]]+value[i])
+print(dp[w])
 # reconstruct solution
-knapsack=[]
-i=n
-j=w
-while(i>0 and j>0):
-    if(dp[i][j]!=dp[i-1][j]):
-        knapsack.append((values[i], weights[i]))
-        j -= weights[i]
-    i-=1
-print(*knapsack)
+solution=[]
+visited=[False]*n
+i=w
+while(i>0):
+    for j in range(n):
+        if(weight[j]<=i and (not visited[j]) and (dp[i]==dp[i-weight[j]]+value[j])):
+            solution.append((weight[j],value[j]))
+            i-=weight[j]
+            visited[j]=True
+            break
+    else:
+        i-=1
+print(*solution)
 
 
 

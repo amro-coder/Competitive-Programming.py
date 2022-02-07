@@ -9,7 +9,7 @@
 # for the right border we include its element if it's a left child (if its right then the result of the query is stored in the parent)
 
 # using segment_tree for prefix_sums
-def constuct_segment_tree():
+def constuct_segment_tree(array):
     segment_tree=[0]*(n<<1)
     for i in range(n):
         segment_tree[i+n]=array[i]
@@ -45,7 +45,7 @@ array =list(map(int,input().split()))
 n=len(array)
 array.extend([0]*(2**((n-1).bit_length())-n)) # nearest power of two#
 n=len(array)
-segment_tree=constuct_segment_tree()
+segment_tree=constuct_segment_tree(array)
 print(segment_tree)
 # both indexes are included in a range and indexing starts from zero
 print(get_range_sum(0,5))
@@ -53,7 +53,7 @@ update_segment_tree(3,10)
 print(get_range_sum(0,5))
 
 # # using segment_tree for min in range query
-# def constuct_segment_tree():
+# def constuct_segment_tree(array):
 #     segment_tree=[0]*(n<<1)
 #     for i in range(n):
 #         segment_tree[i+n]=array[i]
@@ -89,7 +89,7 @@ print(get_range_sum(0,5))
 # n=len(array)
 # array.extend([0]*(2**((n-1).bit_length())-n)) # nearest power of two#
 # n=len(array)# new length(power of two)
-# segment_tree=constuct_segment_tree()
+# segment_tree=constuct_segment_tree(array)
 # print(segment_tree)
 # print(get_range_min(0,5))
 # print(get_range_min(1,5))

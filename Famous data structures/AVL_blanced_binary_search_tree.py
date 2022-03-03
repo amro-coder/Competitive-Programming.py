@@ -6,6 +6,7 @@ class Node:
         self.height = 1 if value != None else 0
         self.left = None
         self.right = None
+        self.level=0
 
 
 class AVL():
@@ -393,3 +394,65 @@ class AVL():
                     queue.append(node.right)
         x.reverse()
         return x
+
+    def __bfs_levels(self):
+        nodes=self.__root.contained_nodes
+        levels = []
+        levels.append([self.__root])
+        self.__root.level = 0
+        nodes -= 1
+        while (nodes):
+            levels.append([])
+            for parent in levels[-2]:
+                # left child
+                if parent.left:
+                    levels[-1].append(parent.left)
+                    parent.left.level = parent.level + 1
+                    nodes -= 1
+                else:
+                    levels[-1].append(Node(" ", parent.level + 1))
+                # right child
+                if parent.right:
+                    levels[-1].append(parent.right)
+                    parent.right.level = parent.level + 1
+                    nodes -= 1
+                else:
+                    levels[-1].append(Node(" ", parent.level + 1))
+        return levels
+
+    def __most_left(self):
+        node = self.__root
+        while (node.left):
+            node = node.left
+        return node
+
+    def print_tree(self):
+        levels = self.__bfs_levels()
+        n = len(levels)
+        spaces = [0]
+        for i in range(n):
+            spaces.append(2 * spaces[-1] + 1)
+        spaces.reverse()
+
+        most_left = self.__most_left()
+        spaces_to_removed = spaces[most_left.level + 1]
+
+        # printing the __root
+        print(" " * (spaces[1] - spaces_to_removed), self.__root.value, sep='')
+        last_padded = (spaces[1] - spaces_to_removed) - 1
+        for i in range(n - 1):
+            # we print the children of current level
+            print(" " * (max(last_padded - spaces[i + 2], 0)), end='')
+            last_padded = max(last_padded - spaces[i + 2], 0) - 1
+            if (levels[i + 1][0].value != " "):
+                print(levels[i + 1][0].value, end=" " * spaces[i + 1])
+            else:
+                print(end=" " * spaces[i + 1])
+            for j in range(1, (1 << (i + 1))):
+                print(levels[i + 1][j].value, end=" " * spaces[i + 1])
+            print()
+
+
+
+
+
